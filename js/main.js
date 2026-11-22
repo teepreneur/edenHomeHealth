@@ -191,13 +191,14 @@
     var skyA = $('#skyA'), skyB = $('#skyB'), stars = $('#stars'), dusk = $('#dusk'), winL = $('#winL'), winR = $('#winR');
     var elTime = $('#dayTime'), elTitle = $('#dayTitle'), elText = $('#dayText'), elTags = $('#dayTags'), chipsEl = $('#dayChips');
     var C = 160, R = 138;
+    var photos = $$('#dialPhotos img'), tint = $('#dialTint');
 
     var SEGMENTS = [
-      { from: 6, to: 9, chip: 'Morning', title: 'A gentle start', text: 'Help getting out of bed, bathing, grooming and dressing, then breakfast at the kitchen table.', tags: ['Personal Care', 'Homemaking'] },
-      { from: 9, to: 12, chip: 'Late morning', title: 'A home in good order', text: 'Light housekeeping and laundry, a grocery run and the essential errands that keep the week moving.', tags: ['Homemaking & Household Support'] },
-      { from: 12, to: 15, chip: 'Midday', title: 'Lunch and good company', text: 'A freshly prepared meal, help with eating if it is needed, and unhurried conversation.', tags: ['Companion Care', 'Personal Care'] },
-      { from: 15, to: 18, chip: 'Afternoon', title: 'Out and about', text: 'A ride to an appointment, a social outing, or time for a favorite hobby with someone alongside.', tags: ['Companion Care'] },
-      { from: 18, to: 21, chip: 'Evening', title: 'Winding down', text: 'Dinner, a tidy kitchen, and help changing and getting comfortable for the night.', tags: ['Personal Care', 'Homemaking'] },
+      { from: 6, to: 9, photo: 0, chip: 'Morning', title: 'A gentle start', text: 'Help getting out of bed, bathing, grooming and dressing, then breakfast at the kitchen table.', tags: ['Personal Care', 'Homemaking'] },
+      { from: 9, to: 12, photo: 1, chip: 'Late morning', title: 'A home in good order', text: 'Light housekeeping and laundry, a grocery run and the essential errands that keep the week moving.', tags: ['Homemaking & Household Support'] },
+      { from: 12, to: 15, photo: 2, chip: 'Midday', title: 'Lunch and good company', text: 'A freshly prepared meal, help with eating if it is needed, and unhurried conversation.', tags: ['Companion Care', 'Personal Care'] },
+      { from: 15, to: 18, photo: 3, chip: 'Afternoon', title: 'Out and about', text: 'A ride to an appointment, a social outing, or time for a favorite hobby with someone alongside.', tags: ['Companion Care'] },
+      { from: 18, to: 21, photo: 4, chip: 'Evening', title: 'Winding down', text: 'Dinner, a tidy kitchen, and help changing and getting comfortable for the night.', tags: ['Personal Care', 'Homemaking'] },
       { from: 21, to: 30, chip: 'Overnight', title: 'Someone is here', text: 'Overnight assistance with mobility and toileting, and peace of mind for the family while everyone rests.', tags: ['24-Hour Home Care', 'Live-In Care'] }
     ];
     // [hour, top colour, bottom colour]
@@ -243,6 +244,7 @@
       var night = hour < 5 || hour > 21 ? 1 : hour < 7 ? (7 - hour) / 2 : hour > 19 ? (hour - 19) / 2 : 0;
       stars.setAttribute('opacity', night);
       dusk.setAttribute('opacity', night * 0.45);
+      tint.style.opacity = night * 0.4;
       var win = night > 0.3 ? '#FFC96B' : '#BFD8CB';
       winL.setAttribute('fill', win); winR.setAttribute('fill', win);
       orb.style.fill = night > 0.5 ? '#F3EFD9' : '';
@@ -259,6 +261,7 @@
         s.tags.forEach(function (tg) { var li = document.createElement('li'); li.textContent = tg; elTags.appendChild(li); });
         [elTitle, elText, elTags].forEach(function (el) { el.classList.remove('swap'); void el.offsetWidth; el.classList.add('swap'); });
         chips.forEach(function (c, m) { c.classList.toggle('is-active', m === n); });
+        photos.forEach(function (ph, m) { ph.classList.toggle('is-on', m === s.photo); });
       }
     }
     function set(h) { hour = ((h % 24) + 24) % 24; render(); }
