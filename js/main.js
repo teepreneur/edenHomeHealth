@@ -199,7 +199,7 @@
       { from: 12, to: 15, photo: 2, chip: 'Midday', title: 'Lunch and good company', text: 'A freshly prepared meal, help with eating if it is needed, and unhurried conversation.', tags: ['Companion Care', 'Personal Care'] },
       { from: 15, to: 18, photo: 3, chip: 'Afternoon', title: 'Out and about', text: 'A ride to an appointment, a social outing, or time for a favorite hobby with someone alongside.', tags: ['Companion Care'] },
       { from: 18, to: 21, photo: 4, chip: 'Evening', title: 'Winding down', text: 'Dinner, a tidy kitchen, and help changing and getting comfortable for the night.', tags: ['Personal Care', 'Homemaking'] },
-      { from: 21, to: 30, chip: 'Overnight', title: 'Someone is here', text: 'Overnight assistance with mobility and toileting, and peace of mind for the family while everyone rests.', tags: ['24-Hour Home Care', 'Live-In Care'] }
+      { from: 21, to: 30, photo: 5, chip: 'Overnight', title: 'Someone is here', text: 'Overnight assistance with mobility and toileting, and peace of mind for the family while everyone rests.', tags: ['24-Hour Home Care', 'Live-In Care'] }
     ];
     // [hour, top colour, bottom colour]
     var SKY = [[0, '0B1F2A', '16343A'], [5, '1B3344', '3A4A5C'], [6.5, 'F7B58A', 'FCE3C8'], [9, 'BFE3EE', 'EAF6F1'], [13, 'A9DBF0', 'E6F5F3'],
@@ -244,7 +244,7 @@
       var night = hour < 5 || hour > 21 ? 1 : hour < 7 ? (7 - hour) / 2 : hour > 19 ? (hour - 19) / 2 : 0;
       stars.setAttribute('opacity', night);
       dusk.setAttribute('opacity', night * 0.45);
-      tint.style.opacity = night * 0.4;
+      tint.style.opacity = segFor(hour) === 5 ? 0 : night * 0.4;   // the night photo is already dark
       var win = night > 0.3 ? '#FFC96B' : '#BFD8CB';
       winL.setAttribute('fill', win); winR.setAttribute('fill', win);
       orb.style.fill = night > 0.5 ? '#F3EFD9' : '';
